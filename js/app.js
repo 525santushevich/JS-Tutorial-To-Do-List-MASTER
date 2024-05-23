@@ -54,3 +54,27 @@ clear.addEventListener("click", function(){
   localStorage.clear;
   location.reload();
 });
+
+document.addEventListener("keyup", function(event) {
+    if (event.keyCode == 13) {
+      const toDo = input.value;
+      if (toDo) {
+        addToDo(toDo, id, false, false);
+        LIST.push({
+          name: toDo,
+          id: id,
+          done: false,
+          trash: false
+        });
+        localStorage.setItem("TODO", JSON.stringify(LIST));
+        id++;
+      }
+      input.value = "";
+    }
+  });
+  function completeToDo(element) {
+    element.classList.toggle(CHECK);
+    element.classList.toggle(UNCHECK);
+    element.parentNode.querySelector(".text").classList.toggle(LINE_THROUGH);
+    LIST[element.id].done = LIST[element.id].done ? false : true;
+  }
